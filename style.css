@@ -1,0 +1,1419 @@
+/* ==========================================================================
+   ROMANTIC BIRTHDAY CARD - STYLESHEET
+   Pure CSS3 with Glassmorphism, Luxury Dark Rose Theme & Smooth Animations
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. DESIGN TOKENS & CSS VARIABLES
+   -------------------------------------------------------------------------- */
+:root {
+    /* Color Palette */
+    --bg-dark-1: #0f0511;
+    --bg-dark-2: #1a081c;
+    --bg-dark-3: #280b2a;
+    
+    --rose-primary: #ff4d6d;
+    --rose-secondary: #ff758f;
+    --rose-soft: #ffb3c1;
+    --rose-light: #fff0f3;
+    
+    --gold-accent: #ffb703;
+    --gold-glow: #ffd166;
+    
+    --glass-bg: rgba(255, 255, 255, 0.07);
+    --glass-border: rgba(255, 255, 255, 0.15);
+    --glass-shadow: 0 15px 35px rgba(0, 0, 0, 0.4), 0 5px 15px rgba(255, 77, 109, 0.15);
+    
+    --text-primary: #ffffff;
+    --text-secondary: #f8c8d8;
+    --text-muted: #b89db5;
+
+    /* Fonts */
+    --font-heading: 'Playfair Display', serif;
+    --font-handwriting: 'Dancing Script', cursive;
+    --font-body: 'Quicksand', sans-serif;
+    --font-accent: 'Montserrat', sans-serif;
+
+    /* Spacing & Layout */
+    --radius-sm: 8px;
+    --radius-md: 16px;
+    --radius-lg: 24px;
+    --radius-full: 9999px;
+    
+    --transition-fast: 0.2s ease;
+    --transition-normal: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    --transition-slow: 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* --------------------------------------------------------------------------
+   2. GLOBAL RESET & BASE STYLES
+   -------------------------------------------------------------------------- */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+    font-size: 16px;
+}
+
+body {
+    font-family: var(--font-body);
+    background-color: var(--bg-dark-1);
+    background-image: 
+        radial-gradient(circle at 10% 20%, rgba(255, 77, 109, 0.15) 0%, transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(255, 183, 3, 0.1) 0%, transparent 40%),
+        radial-gradient(circle at 50% 50%, rgba(40, 11, 42, 0.8) 0%, var(--bg-dark-1) 100%);
+    background-attachment: fixed;
+    color: var(--text-primary);
+    line-height: 1.6;
+    overflow-x: hidden;
+    min-height: 100vh;
+    position: relative;
+}
+
+/* Hidden Utility */
+.hidden {
+    display: none !important;
+}
+
+/* Background Canvas */
+#background-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* Confetti Container */
+#confetti-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 99999;
+    overflow: hidden;
+}
+
+/* Section Containers */
+.section-container {
+    width: 90%;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 5rem 0;
+    position: relative;
+    z-index: 2;
+}
+
+/* Glassmorphism Card Utility */
+.glass-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--glass-shadow);
+}
+
+/* Section Header Typography */
+.section-header {
+    text-align: center;
+    margin-bottom: 3.5rem;
+}
+
+.section-subtitle {
+    font-family: var(--font-accent);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: var(--rose-secondary);
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.section-title {
+    font-family: var(--font-heading);
+    font-size: 2.4rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    text-shadow: 0 4px 15px rgba(255, 77, 109, 0.3);
+}
+
+.section-desc {
+    color: var(--text-muted);
+    font-size: 1.05rem;
+    margin-top: 0.5rem;
+}
+
+.title-divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1rem;
+}
+
+.title-divider::before,
+.title-divider::after {
+    content: '';
+    width: 50px;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--rose-primary));
+}
+
+.title-divider::after {
+    background: linear-gradient(to left, transparent, var(--rose-primary));
+}
+
+.title-divider span {
+    margin: 0 10px;
+    font-size: 1.2rem;
+    animation: heartPulse 1.8s infinite alternate;
+}
+
+/* Buttons System */
+.btn-romantic {
+    background: linear-gradient(135deg, var(--rose-primary), #d90429);
+    color: #ffffff;
+    border: none;
+    padding: 1rem 2.2rem;
+    font-family: var(--font-accent);
+    font-weight: 600;
+    font-size: 1rem;
+    border-radius: var(--radius-full);
+    cursor: pointer;
+    box-shadow: 0 10px 25px rgba(255, 77, 109, 0.4);
+    transition: var(--transition-normal);
+    position: relative;
+    overflow: hidden;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.btn-romantic:hover {
+    transform: translateY(-3px) scale(1.03);
+    box-shadow: 0 15px 35px rgba(255, 77, 109, 0.6);
+}
+
+.btn-romantic:active {
+    transform: translateY(1px);
+}
+
+.btn-secondary {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--rose-soft);
+    border: 1px solid var(--rose-secondary);
+    padding: 0.8rem 1.8rem;
+    font-family: var(--font-accent);
+    font-weight: 600;
+    font-size: 0.95rem;
+    border-radius: var(--radius-full);
+    cursor: pointer;
+    transition: var(--transition-normal);
+}
+
+.btn-secondary:hover {
+    background: var(--rose-primary);
+    color: #ffffff;
+    box-shadow: 0 8px 20px rgba(255, 77, 109, 0.4);
+}
+
+/* --------------------------------------------------------------------------
+   3. GIFT OVERLAY SCREEN (MỞ MÓN QUÀ)
+   -------------------------------------------------------------------------- */
+.gift-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: radial-gradient(circle at center, #2e0828 0%, #0f0312 100%);
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    overflow: hidden;
+    transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), visibility 1s;
+}
+
+.gift-glow-bg {
+    position: absolute;
+    width: 450px;
+    height: 450px;
+    background: radial-gradient(circle, rgba(255, 77, 109, 0.3) 0%, rgba(255, 183, 3, 0.1) 40%, transparent 70%);
+    border-radius: 50%;
+    filter: blur(40px);
+    animation: glowPulse 4s ease-in-out infinite alternate;
+}
+
+.gift-content {
+    position: relative;
+    z-index: 2;
+    max-width: 600px;
+    padding: 2rem;
+}
+
+.gift-header-badge {
+    display: inline-block;
+    padding: 0.4rem 1.2rem;
+    background: rgba(255, 183, 3, 0.15);
+    border: 1px solid var(--gold-accent);
+    color: var(--gold-glow);
+    border-radius: var(--radius-full);
+    font-size: 0.85rem;
+    letter-spacing: 2px;
+    margin-bottom: 1.5rem;
+    animation: fadeInDown 0.8s ease;
+}
+
+.gift-main-text {
+    font-family: var(--font-heading);
+    font-size: 2.2rem;
+    color: var(--text-primary);
+    margin-bottom: 0.8rem;
+    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+.gift-subtext {
+    font-size: 1.15rem;
+    color: var(--rose-soft);
+    margin-bottom: 2.5rem;
+}
+
+/* 3D Interactive Gift Box */
+.gift-box-wrapper {
+    position: relative;
+    width: 170px;
+    height: 170px;
+    margin: 0 auto 2.5rem;
+    cursor: pointer;
+    perspective: 1000px;
+}
+
+.gift-glow-ring {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 220px;
+    height: 220px;
+    border-radius: 50%;
+    border: 2px dashed rgba(255, 183, 3, 0.4);
+    animation: spinSlow 15s linear infinite;
+}
+
+.gift-box {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    animation: giftFloat 3s ease-in-out infinite alternate;
+    transition: transform 0.3s ease;
+}
+
+.gift-box-wrapper:hover .gift-box {
+    transform: scale(1.08) rotate(3deg);
+}
+
+/* Gift Lid */
+.gift-lid {
+    position: absolute;
+    top: 0;
+    left: -5%;
+    width: 110%;
+    height: 45px;
+    background: linear-gradient(135deg, #ff4d6d, #c70039);
+    border-radius: 6px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+    z-index: 3;
+    transition: transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Bow */
+.gift-bow {
+    position: absolute;
+    top: -22px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 30px;
+}
+
+.bow-left, .bow-right {
+    position: absolute;
+    width: 32px;
+    height: 24px;
+    border: 4px solid var(--gold-accent);
+    border-radius: 50% 50% 0 50%;
+    top: 0;
+}
+
+.bow-left {
+    left: 0;
+    transform: rotate(-20deg);
+}
+
+.bow-right {
+    right: 0;
+    transform: rotate(20deg) scaleX(-1);
+}
+
+.bow-center {
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 14px;
+    height: 14px;
+    background: var(--gold-accent);
+    border-radius: 50%;
+    box-shadow: 0 0 10px var(--gold-glow);
+}
+
+.lid-tape {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 22px;
+    height: 100%;
+    background: var(--gold-accent);
+}
+
+/* Gift Body */
+.gift-body {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 130px;
+    background: linear-gradient(135deg, #e60049, #900c3f);
+    border-radius: 0 0 10px 10px;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+}
+
+.body-tape-v {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 22px;
+    height: 100%;
+    background: var(--gold-accent);
+}
+
+.body-tape-h {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    width: 100%;
+    height: 22px;
+    background: var(--gold-accent);
+}
+
+/* Sparkles around gift */
+.gift-sparkles {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.gift-sparkles span {
+    position: absolute;
+    font-size: 1.2rem;
+    animation: sparkleFloat 2.5s infinite ease-in-out;
+}
+
+.gift-sparkles span:nth-child(1) { top: -10px; left: -10px; animation-delay: 0s; }
+.gift-sparkles span:nth-child(2) { top: 20px; right: -20px; animation-delay: 0.5s; }
+.gift-sparkles span:nth-child(3) { bottom: -10px; left: 10px; animation-delay: 1s; }
+.gift-sparkles span:nth-child(4) { bottom: 20px; right: -10px; animation-delay: 1.5s; }
+.gift-sparkles span:nth-child(5) { top: -20px; right: 30px; animation-delay: 2s; }
+
+.gift-footer-prompt {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    animation: bounce 1.5s infinite;
+}
+
+/* Gift Opening Animation State */
+.gift-overlay.opening .gift-lid {
+    transform: translateY(-120px) rotate(-25deg) scale(1.1);
+    opacity: 0.8;
+}
+
+.gift-overlay.opening .gift-box {
+    animation: giftBurst 0.6s ease-out forwards;
+}
+
+.gift-overlay.fade-out {
+    opacity: 0;
+    visibility: hidden;
+}
+
+/* --------------------------------------------------------------------------
+   4. FLOATING MUSIC CONTROLLER
+   -------------------------------------------------------------------------- */
+.music-control {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    width: 54px;
+    height: 54px;
+    background: rgba(255, 77, 109, 0.25);
+    backdrop-filter: blur(12px);
+    border: 1.5px solid var(--rose-secondary);
+    border-radius: 50%;
+    z-index: 9000;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 25px rgba(255, 77, 109, 0.4);
+    transition: var(--transition-normal);
+}
+
+.music-control:hover {
+    transform: scale(1.1);
+    box-shadow: 0 12px 30px rgba(255, 77, 109, 0.6);
+}
+
+.vinyl-disc {
+    font-size: 1.4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.5s linear;
+}
+
+.music-control.playing .vinyl-disc {
+    animation: spinSlow 4s linear infinite;
+}
+
+.music-waves {
+    position: absolute;
+    bottom: 6px;
+    display: flex;
+    gap: 3px;
+    align-items: flex-end;
+    height: 10px;
+}
+
+.music-waves span {
+    width: 3px;
+    height: 4px;
+    background: var(--gold-accent);
+    border-radius: 2px;
+}
+
+.music-control.playing .music-waves span:nth-child(1) { animation: soundWave 0.8s infinite ease-in-out; }
+.music-control.playing .music-waves span:nth-child(2) { animation: soundWave 1.2s infinite ease-in-out 0.2s; }
+.music-control.playing .music-waves span:nth-child(3) { animation: soundWave 0.9s infinite ease-in-out 0.4s; }
+
+/* --------------------------------------------------------------------------
+   5. HERO SECTION
+   -------------------------------------------------------------------------- */
+.hero-section {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding: 3rem 1.5rem 4rem;
+}
+
+.hero-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 2.5rem;
+    max-width: 900px;
+    z-index: 2;
+}
+
+.hero-photo-wrapper {
+    position: relative;
+}
+
+.hero-photo-frame {
+    width: 280px;
+    height: 360px;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    position: relative;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.6), 0 0 30px rgba(255, 77, 109, 0.4);
+    transform: rotate(-2deg);
+    transition: var(--transition-normal);
+}
+
+.hero-photo-frame:hover {
+    transform: rotate(0deg) scale(1.03);
+    box-shadow: 0 25px 55px rgba(255, 77, 109, 0.6);
+}
+
+.hero-photo-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    animation: imageZoomSubtle 12s infinite alternate ease-in-out;
+}
+
+.hero-photo-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(15, 5, 17, 0.6) 0%, transparent 60%);
+}
+
+.hero-badge {
+    position: absolute;
+    bottom: -15px;
+    right: -15px;
+    background: linear-gradient(135deg, var(--rose-primary), var(--gold-accent));
+    color: #ffffff;
+    font-size: 0.85rem;
+    font-weight: 700;
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius-full);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
+    font-family: var(--font-accent);
+}
+
+.hero-pretitle {
+    font-family: var(--font-accent);
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    color: var(--gold-glow);
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.hero-girlfriend-name {
+    font-family: var(--font-heading);
+    font-size: 3.5rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #ffffff 30%, var(--rose-soft) 70%, var(--gold-glow) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 10px 30px rgba(255, 77, 109, 0.3);
+    line-height: 1.2;
+    margin-bottom: 1rem;
+}
+
+.hero-subtitle {
+    font-size: 1.2rem;
+    color: var(--text-secondary);
+    max-width: 600px;
+}
+
+.scroll-down-btn {
+    position: absolute;
+    bottom: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 0.85rem;
+    transition: var(--transition-fast);
+    z-index: 2;
+}
+
+.scroll-down-btn:hover {
+    color: var(--rose-soft);
+}
+
+.scroll-arrow {
+    font-size: 1.3rem;
+    animation: bounce 1.8s infinite;
+}
+
+/* --------------------------------------------------------------------------
+   6. WISHES & TYPING SECTION
+   -------------------------------------------------------------------------- */
+.wishes-card {
+    padding: 3.5rem 2.5rem;
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto;
+    position: relative;
+}
+
+.wishes-heart-badge {
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+    display: inline-block;
+    animation: heartPulse 1.5s infinite alternate;
+}
+
+.typing-container {
+    min-height: 110px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 2rem;
+}
+
+.typing-text {
+    font-family: var(--font-handwriting);
+    font-size: 2.2rem;
+    color: var(--rose-light);
+    line-height: 1.5;
+    text-shadow: 0 4px 15px rgba(255, 77, 109, 0.4);
+}
+
+.typing-cursor {
+    font-size: 2.2rem;
+    color: var(--rose-primary);
+    animation: blink 0.8s infinite;
+    margin-left: 2px;
+}
+
+/* --------------------------------------------------------------------------
+   7. SCRAPBOOK ALBUM (MEMORIES GALLERY)
+   -------------------------------------------------------------------------- */
+.category-filters {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.8rem;
+    margin-bottom: 3rem;
+}
+
+.filter-pill {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid var(--glass-border);
+    color: var(--text-secondary);
+    padding: 0.6rem 1.4rem;
+    border-radius: var(--radius-full);
+    font-family: var(--font-accent);
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: var(--transition-normal);
+}
+
+.filter-pill:hover, .filter-pill.active {
+    background: var(--rose-primary);
+    color: #ffffff;
+    border-color: var(--rose-primary);
+    box-shadow: 0 6px 20px rgba(255, 77, 109, 0.4);
+}
+
+.memories-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 2rem;
+    perspective: 1000px;
+}
+
+/* Polaroid Card Style */
+.polaroid-card {
+    background: #ffffff;
+    padding: 14px 14px 22px 14px;
+    border-radius: 6px;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+    cursor: pointer;
+    transition: var(--transition-normal);
+    position: relative;
+    transform: rotate(calc(var(--rotation, 0) * 1deg));
+}
+
+.polaroid-card::before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 20px;
+    background: rgba(255, 255, 255, 0.35);
+    backdrop-filter: blur(4px);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    z-index: 2;
+}
+
+.polaroid-card:hover {
+    transform: translateY(-10px) rotate(0deg) scale(1.04) !important;
+    box-shadow: 0 20px 40px rgba(255, 77, 109, 0.5);
+    z-index: 10;
+}
+
+.polaroid-img-box {
+    width: 100%;
+    height: 260px;
+    overflow: hidden;
+    border-radius: 3px;
+    background: #111;
+    position: relative;
+}
+
+.polaroid-img-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+}
+
+.polaroid-card:hover .polaroid-img-box img {
+    transform: scale(1.08);
+}
+
+.polaroid-caption-box {
+    padding-top: 12px;
+    text-align: center;
+}
+
+.polaroid-title {
+    font-family: var(--font-handwriting);
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #1a081c;
+    margin-bottom: 2px;
+}
+
+.polaroid-caption {
+    font-size: 0.85rem;
+    color: #555555;
+    line-height: 1.3;
+}
+
+.gallery-expand-wrapper {
+    text-align: center;
+    margin-top: 3.5rem;
+}
+
+/* --------------------------------------------------------------------------
+   8. TIMELINE (HÀNH TRÌNH TÌNH YÊU)
+   -------------------------------------------------------------------------- */
+.timeline-container {
+    position: relative;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem 0;
+}
+
+.timeline-line {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: 3px;
+    background: linear-gradient(to bottom, transparent, var(--rose-primary) 15%, var(--gold-accent) 85%, transparent);
+    transform: translateX(-50%);
+}
+
+.timeline-item {
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 40px;
+    position: relative;
+    margin-bottom: 3.5rem;
+    width: 50%;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: var(--transition-slow);
+}
+
+.timeline-item.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.timeline-item:nth-child(even) {
+    align-self: flex-end;
+    justify-content: flex-start;
+    padding-right: 0;
+    padding-left: 40px;
+    margin-left: 50%;
+}
+
+.timeline-node {
+    position: absolute;
+    top: 20px;
+    right: -14px;
+    width: 28px;
+    height: 28px;
+    background: var(--rose-primary);
+    border: 3px solid var(--bg-dark-1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    font-size: 0.7rem;
+    box-shadow: 0 0 15px var(--rose-primary);
+    z-index: 3;
+}
+
+.timeline-item:nth-child(even) .timeline-node {
+    right: auto;
+    left: -14px;
+}
+
+.timeline-card {
+    padding: 1.5rem;
+    max-width: 400px;
+    width: 100%;
+}
+
+.timeline-photo {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: var(--radius-sm);
+    margin-bottom: 1rem;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+.timeline-date {
+    display: inline-block;
+    font-family: var(--font-accent);
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--gold-glow);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 0.4rem;
+}
+
+.timeline-title {
+    font-family: var(--font-heading);
+    font-size: 1.3rem;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+}
+
+.timeline-desc {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+}
+
+/* --------------------------------------------------------------------------
+   9. VIDEO SECTION
+   -------------------------------------------------------------------------- */
+.video-card {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 1.5rem;
+}
+
+.video-wrapper {
+    position: relative;
+    padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+    height: 0;
+    overflow: hidden;
+    border-radius: var(--radius-md);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+.video-wrapper video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.video-caption {
+    text-align: center;
+    margin-top: 1.2rem;
+    color: var(--text-secondary);
+    font-size: 1.05rem;
+}
+
+/* --------------------------------------------------------------------------
+   10. LOVE LETTER SECTION & ENVELOPE
+   -------------------------------------------------------------------------- */
+.envelope-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2.5rem;
+    margin-top: 2rem;
+}
+
+.envelope-box {
+    position: relative;
+    width: 280px;
+    height: 180px;
+    background: #e63946;
+    border-radius: 8px;
+    cursor: pointer;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.5), 0 0 25px rgba(255,77,109,0.3);
+    transition: transform 0.4s ease;
+}
+
+.envelope-box:hover {
+    transform: translateY(-8px) scale(1.03);
+}
+
+.envelope-front {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 0;
+    border-left: 140px solid #d90429;
+    border-right: 140px solid #d90429;
+    border-bottom: 100px solid #c70039;
+    border-top: 80px solid transparent;
+    border-radius: 0 0 8px 8px;
+    z-index: 3;
+}
+
+.envelope-top {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 0;
+    border-left: 140px solid transparent;
+    border-right: 140px solid transparent;
+    border-top: 100px solid #ef233c;
+    transform-origin: top;
+    transition: transform 0.5s ease;
+    z-index: 4;
+}
+
+.envelope-paper-preview {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 240px;
+    height: 140px;
+    background: #fff;
+    border-radius: 4px;
+    padding: 15px;
+    text-align: center;
+    color: #333;
+    font-family: var(--font-handwriting);
+    font-size: 1.4rem;
+    z-index: 2;
+    transition: transform 0.5s ease;
+}
+
+.wax-seal {
+    position: absolute;
+    top: 90px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 44px;
+    height: 44px;
+    background: #900c3f;
+    border: 2px solid var(--gold-accent);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 1.2rem;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+    z-index: 5;
+}
+
+/* Letter Modal Unfolding */
+.letter-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 20000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+}
+
+.letter-modal-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(10, 3, 12, 0.85);
+    backdrop-filter: blur(12px);
+}
+
+.letter-paper-wrapper {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 650px;
+    max-height: 85vh;
+    overflow-y: auto;
+}
+
+.letter-close-btn {
+    position: absolute;
+    top: -15px;
+    right: -15px;
+    width: 40px;
+    height: 40px;
+    background: var(--rose-primary);
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    font-size: 1.5rem;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+    z-index: 10;
+}
+
+.letter-paper {
+    background: #fffdf9;
+    color: #2b2d42;
+    padding: 3rem 2.5rem;
+    border-radius: 12px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+    background-image: linear-gradient(#e5e5e5 1px, transparent 1px);
+    background-size: 100% 1.8rem;
+}
+
+.letter-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid var(--rose-soft);
+    padding-bottom: 1rem;
+    margin-bottom: 2rem;
+}
+
+.letter-stamp {
+    font-family: var(--font-accent);
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: var(--rose-primary);
+}
+
+.letter-date {
+    font-family: var(--font-handwriting);
+    font-size: 1.3rem;
+    color: #666;
+}
+
+.letter-content-body {
+    font-family: var(--font-handwriting);
+    font-size: 1.8rem;
+    line-height: 1.8rem;
+    color: #1d3557;
+    white-space: pre-line;
+}
+
+.letter-signature {
+    margin-top: 2.5rem;
+    text-align: right;
+    font-family: var(--font-handwriting);
+    font-size: 2rem;
+    color: var(--rose-primary);
+}
+
+/* --------------------------------------------------------------------------
+   11. FINAL CLOSING SECTION
+   -------------------------------------------------------------------------- */
+.final-section {
+    position: relative;
+    padding: 6rem 1.5rem;
+    text-align: center;
+    overflow: hidden;
+}
+
+.final-bg-overlay {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    filter: blur(8px) brightness(0.3);
+    z-index: 1;
+}
+
+.final-card {
+    max-width: 750px;
+    margin: 0 auto;
+    padding: 4rem 2.5rem;
+    position: relative;
+    z-index: 2;
+}
+
+.final-heart-icon {
+    font-size: 3.5rem;
+    margin-bottom: 1.5rem;
+    animation: heartPulse 1.4s infinite alternate;
+}
+
+.final-heading {
+    font-family: var(--font-heading);
+    font-size: 3rem;
+    color: var(--gold-glow);
+    margin-bottom: 2rem;
+    text-shadow: 0 5px 20px rgba(255, 183, 3, 0.4);
+}
+
+.final-wishes-lines {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    margin-bottom: 3rem;
+}
+
+.final-line {
+    font-size: 1.3rem;
+    color: var(--text-primary);
+    line-height: 1.6;
+}
+
+.final-line-4 {
+    font-weight: 700;
+    color: var(--rose-soft);
+}
+
+.final-love-declaration {
+    margin-bottom: 2.5rem;
+}
+
+.love-pulse-text {
+    font-family: var(--font-handwriting);
+    font-size: 3.2rem;
+    color: var(--rose-primary);
+    text-shadow: 0 0 20px var(--rose-primary), 0 0 40px var(--rose-secondary);
+    animation: heartPulse 1.2s infinite alternate;
+}
+
+/* --------------------------------------------------------------------------
+   12. LIGHTBOX MODAL
+   -------------------------------------------------------------------------- */
+.lightbox-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 30000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.lightbox-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(8, 2, 10, 0.95);
+    backdrop-filter: blur(15px);
+}
+
+.lightbox-btn {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    border: 1px solid var(--glass-border);
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    font-size: 1.5rem;
+    cursor: pointer;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition-fast);
+}
+
+.lightbox-btn:hover {
+    background: var(--rose-primary);
+    transform: scale(1.1);
+}
+
+.lightbox-close-btn { top: 25px; right: 25px; }
+.lightbox-prev-btn { left: 25px; top: 50%; transform: translateY(-50%); }
+.lightbox-next-btn { right: 25px; top: 50%; transform: translateY(-50%); }
+
+.lightbox-content-box {
+    position: relative;
+    z-index: 2;
+    max-width: 85vw;
+    max-height: 85vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.lightbox-img-container {
+    max-height: 70vh;
+    overflow: hidden;
+    border-radius: var(--radius-md);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+}
+
+.lightbox-img-container img {
+    max-width: 100%;
+    max-height: 70vh;
+    object-fit: contain;
+    display: block;
+}
+
+.lightbox-info {
+    text-align: center;
+    margin-top: 1.2rem;
+    max-width: 600px;
+}
+
+.lightbox-counter {
+    font-family: var(--font-accent);
+    font-size: 0.8rem;
+    color: var(--gold-glow);
+    letter-spacing: 2px;
+}
+
+.lightbox-title {
+    font-family: var(--font-heading);
+    font-size: 1.4rem;
+    color: var(--text-primary);
+    margin: 0.3rem 0;
+}
+
+.lightbox-caption {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+}
+
+/* Footer */
+.app-footer {
+    text-align: center;
+    padding: 2rem;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    border-top: 1px solid rgba(255,255,255,0.05);
+}
+
+/* --------------------------------------------------------------------------
+   13. KEYFRAME ANIMATIONS
+   -------------------------------------------------------------------------- */
+@keyframes giftFloat {
+    0% { transform: translateY(0) rotate(0deg); }
+    100% { transform: translateY(-12px) rotate(2deg); }
+}
+
+@keyframes giftBurst {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.15) rotate(-5deg); }
+    100% { transform: scale(1) rotate(0deg); }
+}
+
+@keyframes glowPulse {
+    0% { transform: scale(0.9); opacity: 0.4; }
+    100% { transform: scale(1.2); opacity: 0.8; }
+}
+
+@keyframes spinSlow {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes sparkleFloat {
+    0%, 100% { transform: translateY(0) scale(0.8); opacity: 0.3; }
+    50% { transform: translateY(-15px) scale(1.2); opacity: 1; }
+}
+
+@keyframes heartPulse {
+    0% { transform: scale(1); }
+    100% { transform: scale(1.15); }
+}
+
+@keyframes soundWave {
+    0%, 100% { height: 4px; }
+    50% { height: 14px; }
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+    40% { transform: translateY(-8px); }
+    60% { transform: translateY(-4px); }
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+@keyframes fadeInDown {
+    0% { opacity: 0; transform: translateY(-20px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes imageZoomSubtle {
+    0% { transform: scale(1); }
+    100% { transform: scale(1.08); }
+}
+
+/* --------------------------------------------------------------------------
+   14. RESPONSIVE BREAKPOINTS
+   -------------------------------------------------------------------------- */
+@media (max-width: 900px) {
+    .timeline-line { left: 30px; }
+    .timeline-item, .timeline-item:nth-child(even) {
+        width: 100%;
+        margin-left: 0;
+        padding-left: 70px;
+        padding-right: 0;
+    }
+    .timeline-node, .timeline-item:nth-child(even) .timeline-node {
+        left: 16px;
+        right: auto;
+    }
+}
+
+@media (max-width: 768px) {
+    .section-title { font-size: 1.9rem; }
+    .hero-girlfriend-name { font-size: 2.5rem; }
+    .hero-photo-frame { width: 230px; height: 300px; }
+    .typing-text { font-size: 1.7rem; }
+    .memories-grid { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); }
+    .final-heading { font-size: 2.2rem; }
+    .love-pulse-text { font-size: 2.4rem; }
+    .lightbox-prev-btn { left: 10px; }
+    .lightbox-next-btn { right: 10px; }
+}
+
+@media (max-width: 480px) {
+    .gift-main-text { font-size: 1.7rem; }
+    .gift-box-wrapper { width: 140px; height: 140px; }
+    .gift-lid { height: 36px; }
+    .hero-girlfriend-name { font-size: 2.1rem; }
+    .hero-photo-frame { width: 200px; height: 260px; }
+    .typing-text { font-size: 1.4rem; }
+    .wishes-card { padding: 2rem 1.2rem; }
+    .envelope-box { width: 240px; height: 150px; }
+    .envelope-paper-preview { width: 200px; height: 110px; }
+    .envelope-front { border-left-width: 120px; border-right-width: 120px; }
+    .envelope-top { border-left-width: 120px; border-right-width: 120px; }
+    .letter-paper { padding: 1.8rem 1.2rem; }
+    .letter-content-body { font-size: 1.4rem; line-height: 1.6rem; }
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}

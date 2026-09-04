@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday My Love ❤️ | Món Quà Sinh Nhật Đặc Biệt</title>
+    <meta name="description" content="Chiếc thiệp sinh nhật điện tử tương tác đong đầy tình cảm dành tặng người yêu thương nhất.">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Dancing+Script:wght@600;700&family=Montserrat:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <!-- Background Canvas for Floating Hearts & Star Particles -->
+    <canvas id="background-canvas"></canvas>
+    
+    <!-- Confetti Container -->
+    <div id="confetti-container"></div>
+
+    <!-- Music Control Floating Widget -->
+    <div id="music-control-btn" class="music-control hidden" title="Phát / Tạm dừng nhạc">
+        <div class="vinyl-disc">
+            <span class="music-icon">🎵</span>
+        </div>
+        <span class="music-waves">
+            <span></span><span></span><span></span>
+        </span>
+    </div>
+    <audio id="bg-music" loop preload="auto"></audio>
+
+    <!-- ========================================== -->
+    <!-- 1. GIFT OVERLAY SCREEN (MỞ MÓN QUÀ)        -->
+    <!-- ========================================== -->
+    <div id="gift-overlay" class="gift-overlay">
+        <div class="gift-glow-bg"></div>
+        <div class="gift-content">
+            <div class="gift-header-badge">✨ Món quà sinh nhật đặc biệt ✨</div>
+            <h1 class="gift-main-text">Anh có một món quà nhỏ dành cho em...</h1>
+            <p class="gift-subtext">Click vào hộp quà bên dưới để mở nhé ❤️</p>
+            
+            <div id="gift-box-wrapper" class="gift-box-wrapper" role="button" aria-label="Mở hộp quà sinh nhật">
+                <div class="gift-glow-ring"></div>
+                <div class="gift-box">
+                    <div class="gift-lid">
+                        <div class="gift-bow">
+                            <div class="bow-left"></div>
+                            <div class="bow-right"></div>
+                            <div class="bow-center"></div>
+                        </div>
+                        <div class="lid-tape"></div>
+                    </div>
+                    <div class="gift-body">
+                        <div class="body-tape-v"></div>
+                        <div class="body-tape-h"></div>
+                    </div>
+                </div>
+                <div class="gift-sparkles">
+                    <span>✨</span><span>💖</span><span>🌸</span><span>✨</span><span>💕</span>
+                </div>
+            </div>
+
+            <div class="gift-footer-prompt">
+                <span class="tap-icon">👇</span> Nhấn nhẹ vào hộp quà nè!
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- MAIN APPLICATION CONTENT                  -->
+    <!-- ========================================== -->
+    <div id="app-content" class="app-content hidden">
+        
+        <!-- HERO SECTION -->
+        <section id="hero-section" class="hero-section">
+            <div class="hero-bg-glow"></div>
+            <div class="hero-container">
+                <div class="hero-photo-wrapper">
+                    <div class="hero-photo-frame">
+                        <img id="hero-img" src="" alt="Hero Photo" loading="eager" />
+                        <div class="hero-photo-overlay"></div>
+                    </div>
+                    <div class="hero-badge">💖 Kỷ niệm đẹp nhất</div>
+                </div>
+                
+                <div class="hero-text-content">
+                    <span class="hero-pretitle">🎉 Happy Birthday 🎉</span>
+                    <h1 id="hero-girlfriend-name" class="hero-girlfriend-name">Tên Người Yêu ❤️</h1>
+                    <p id="hero-subtitle" class="hero-subtitle">Chúc em tuổi mới tràn ngập nụ cười, niềm vui và hạnh phúc ấm áp bên anh!</p>
+                </div>
+            </div>
+            
+            <a href="#wishes-section" class="scroll-down-btn" aria-label="Cuộn xuống bên dưới">
+                <span class="scroll-text">Khám phá tiếp</span>
+                <span class="scroll-arrow">↓</span>
+            </a>
+        </section>
+
+        <!-- WISHES & TYPING SECTION -->
+        <section id="wishes-section" class="wishes-section">
+            <div class="section-container">
+                <div class="wishes-card glass-card">
+                    <div class="wishes-heart-badge">💌</div>
+                    <div class="typing-container">
+                        <p id="typing-text" class="typing-text"></p>
+                        <span class="typing-cursor">|</span>
+                    </div>
+                    <button id="wishes-next-btn" class="btn-romantic wishes-btn">
+                        <span>Những khoảnh khắc kỷ niệm ❤️</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ALBUM KỶ NIỆM (SCRAPBOOK GALLERY) -->
+        <section id="memories-section" class="memories-section">
+            <div class="section-container">
+                <div class="section-header">
+                    <span class="section-subtitle">Góc Kỷ Niệm</span>
+                    <h2 class="section-title">Những khoảnh khắc anh muốn giữ mãi ❤️</h2>
+                    <div class="title-divider"><span>🌸</span></div>
+                </div>
+
+                <!-- Category Filters -->
+                <div id="category-filters" class="category-filters">
+                    <button class="filter-pill active" data-filter="all">Tất cả</button>
+                    <button class="filter-pill" data-filter="hero">Nổi bật</button>
+                    <button class="filter-pill" data-filter="timeline">Hành trình</button>
+                    <button class="filter-pill" data-filter="memories">Kỷ niệm</button>
+                    <button class="filter-pill" data-filter="final">Yêu thương</button>
+                </div>
+
+                <!-- Gallery Grid -->
+                <div id="memories-grid" class="memories-grid"></div>
+
+                <!-- Load More / Expand Button -->
+                <div class="gallery-expand-wrapper">
+                    <button id="toggle-all-photos-btn" class="btn-secondary">
+                        <span>Xem tất cả album ảnh (73 ảnh) ✨</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- TIMELINE HÀNH TRÌNH TÌNH YÊU -->
+        <section id="timeline-section" class="timeline-section">
+            <div class="section-container">
+                <div class="section-header">
+                    <span class="section-subtitle">Love Journey</span>
+                    <h2 class="section-title">Hành trình đong đầy thương nhớ ❤️</h2>
+                    <p class="section-desc">Cùng nhìn lại từng khoảnh khắc ngọt ngào chúng mình đã đi qua</p>
+                    <div class="title-divider"><span>💕</span></div>
+                </div>
+
+                <div id="timeline-container" class="timeline-container">
+                    <div class="timeline-line"></div>
+                    <!-- Timeline items rendered dynamically JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- VIDEO SECTION (Auto hidden if no video) -->
+        <section id="video-section" class="video-section hidden">
+            <div class="section-container">
+                <div class="section-header">
+                    <span class="section-subtitle">Video Kỷ Niệm</span>
+                    <h2 class="section-title">Anh muốn em xem điều này ❤️</h2>
+                    <div class="title-divider"><span>🎥</span></div>
+                </div>
+
+                <div class="video-card glass-card">
+                    <div class="video-wrapper">
+                        <video id="birthday-video" controls poster="" preload="metadata">
+                            <source id="video-source" src="" type="video/mp4">
+                            Trình duyệt của bạn không hỗ trợ thẻ video.
+                        </video>
+                    </div>
+                    <p id="video-caption" class="video-caption">Khoảnh khắc sống động đong đầy cảm xúc dành riêng cho em.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- BỨC THƯ TÌNH (LOVE LETTER) -->
+        <section id="letter-section" class="letter-section">
+            <div class="section-container">
+                <div class="section-header">
+                    <span class="section-subtitle">Lời Muốn Nói</span>
+                    <h2 class="section-title">Anh có một điều muốn gửi tới em... 💌</h2>
+                    <div class="title-divider"><span>✨</span></div>
+                </div>
+
+                <div class="envelope-area">
+                    <div id="envelope-box" class="envelope-box" role="button" aria-label="Mở thư tình">
+                        <div class="envelope-back"></div>
+                        <div class="envelope-paper-preview">
+                            <p>Em à...</p>
+                        </div>
+                        <div class="envelope-front"></div>
+                        <div class="envelope-top"></div>
+                        <div class="wax-seal">
+                            <span>❤️</span>
+                        </div>
+                    </div>
+                    
+                    <button id="open-letter-btn" class="btn-romantic open-letter-btn">
+                        <span>Mở bức thư tình 💌</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- LETTER FULL MODAL -->
+        <div id="letter-modal" class="letter-modal hidden">
+            <div class="letter-modal-backdrop"></div>
+            <div class="letter-paper-wrapper">
+                <button id="close-letter-btn" class="letter-close-btn" aria-label="Đóng thư">&times;</button>
+                <div class="letter-paper">
+                    <div class="letter-header">
+                        <span class="letter-stamp">💌 FOR MY LOVE</span>
+                        <div class="letter-date" id="letter-date-display">Gửi cô gái nhỏ của anh</div>
+                    </div>
+                    <div id="letter-content-body" class="letter-content-body">
+                        <!-- Rendered dynamically line by line -->
+                    </div>
+                    <div class="letter-signature">
+                        <p>Mãi yêu em ❤️</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- FINAL CLOSING SECTION -->
+        <section id="final-section" class="final-section">
+            <div id="final-bg-overlay" class="final-bg-overlay"></div>
+            <div class="section-container">
+                <div class="final-card glass-card">
+                    <div class="final-heart-icon">❤️</div>
+                    <h2 id="final-heading" class="final-heading">HAPPY BIRTHDAY</h2>
+                    
+                    <div class="final-wishes-lines">
+                        <p class="final-line final-line-1">Chúc em tuổi mới thật hạnh phúc.</p>
+                        <p class="final-line final-line-2">Mong rằng mỗi ngày của em đều có thật nhiều niềm vui.</p>
+                        <p class="final-line final-line-3">Và mong rằng...</p>
+                        <p class="final-line final-line-4">Anh vẫn sẽ luôn được ở bên em trong những sinh nhật tiếp theo.</p>
+                    </div>
+
+                    <div id="final-love-declaration" class="final-love-declaration hidden">
+                        <span class="love-pulse-text">Anh yêu em ❤️</span>
+                    </div>
+
+                    <div class="final-actions">
+                        <button id="confetti-replay-btn" class="btn-romantic">
+                            <span>🎉 Bắn tim & Pháo hoa</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FOOTER -->
+        <footer class="app-footer">
+            <p>Made with ❤️ specially for my sweetheart</p>
+        </footer>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- LIGHTBOX MODAL                             -->
+    <!-- ========================================== -->
+    <div id="lightbox-modal" class="lightbox-modal hidden" role="dialog" aria-modal="true">
+        <div id="lightbox-backdrop" class="lightbox-backdrop"></div>
+        
+        <button id="lightbox-close" class="lightbox-btn lightbox-close-btn" aria-label="Đóng">&times;</button>
+        <button id="lightbox-prev" class="lightbox-btn lightbox-prev-btn" aria-label="Ảnh trước">&#10094;</button>
+        <button id="lightbox-next" class="lightbox-btn lightbox-next-btn" aria-label="Ảnh tiếp">&#10095;</button>
+        
+        <div class="lightbox-content-box">
+            <div class="lightbox-img-container">
+                <img id="lightbox-img" src="" alt="Enlarged photo" />
+            </div>
+            <div class="lightbox-info">
+                <span id="lightbox-counter" class="lightbox-counter">1 / 10</span>
+                <h3 id="lightbox-title" class="lightbox-title">Tiêu đề</h3>
+                <p id="lightbox-caption" class="lightbox-caption">Chú thích ảnh</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Script References -->
+    <script src="./assets/image-manifest.js"></script>
+    <script src="./script.js"></script>
+</body>
+</html>
